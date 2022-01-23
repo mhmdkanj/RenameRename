@@ -1,0 +1,98 @@
+import re
+from pathlib import Path
+from renamerename.handlers.filetransformation import FileTransformation 
+
+
+class FilenameHandler:
+
+    @staticmethod
+    def add_prefix(name, prefix):
+        return prefix + name
+    
+
+    @staticmethod
+    def add_suffix(name, suffix):
+        filename, ext = FilenameHandler.get_components(name)
+        return filename + suffix + ext
+
+
+    @staticmethod
+    def change_extension(name, new_ext):
+        filename, _ = FilenameHandler.get_components(name)
+        return filename + new_ext
+
+    
+    @staticmethod
+    def change_name(name, new_filename):
+        _, ext = FilenameHandler.get_components(name)
+        return new_filename + ext 
+    
+
+    @staticmethod
+    def get_components(name):
+        extensions = Path(name).suffixes
+        filename = Path(name)
+        for i, _ in enumerate(extensions):
+            filename = Path(filename.stem)
+        return str(filename), ''.join(extensions)
+
+
+class DirectoryHandler:
+    
+    def __init__(self, names):
+        self.names = names
+        self.filenames = self.names
+        self.filenamehandler = FilenameHandler()
+        self.filetransformations = FileTransformation(self.filenames)
+
+
+    def filter_names(self, filter=None):
+        if filter is None:
+            self.filenames = self.names
+        else:
+            pattern = re.compile(filter)
+            filter_results = []
+            for name in self.names:
+                if re.search(pattern, name):
+                    filter_results.append(name)
+            self.filenames = filter_results
+
+    
+    def add_prefix(self, prefix):
+        for name in self.filenames:
+            self.filetransformations[name] = self.filenamehandler.add_prefix(name, prefix)
+
+
+    def add_suffix(self, suffix):
+        for name in self.filenames:
+            self.filetransformations[name] = self.filenamehandler.add_suffix(name, suffix)
+
+
+    def change_extension(self, new_ext):
+        for name in self.filenames:
+            self.filetransformations[name] = self.filenamehandler.change_extension(name, new_ext)
+
+    
+    def add_numbering(self, prefix):
+        for i, name in enumerate(self.filenames):
+            new_name = self.filenamehandler.change_name(name, prefix)
+            self.filetransformations[name] = self.filenamehandler.add_suffix(new_name, str(i))
+
+
+    @property
+    def filetransformations(self):
+        return self._filetransformations
+
+
+    @filetransformations.setter
+    def filetransformations(self, val):
+        self._filetransformations = val
+
+    @property
+    def filenames(self):
+        return self._filenames
+
+    @filenames.setter
+    def filenames(self, val):
+        self._filenames = val
+        self.filetransformations = FileTransformation(self._filenames)
