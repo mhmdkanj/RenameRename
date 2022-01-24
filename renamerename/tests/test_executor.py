@@ -13,6 +13,8 @@ class RenameMock:
         self.dirfiles.remove(src)
         self.dirfiles.add(dst)
 
+    def exists(self, name):
+        return name in self.dirfiles
 
 class TestRenameExecutor:
 
@@ -85,6 +87,7 @@ class TestRenameExecutor:
 
     def test_execute(self, rename_executor, get_filenames, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
+        mocker.patch('os.path.exists', mocked_filesys.exists)
         
         filetransformation = FileTransformation(get_filenames)
         filetransformation['aaa'] = 'fff' # duplicate with file in filesystem
