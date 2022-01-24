@@ -26,4 +26,4 @@ class FileTransformation(MutableMapping):
         return output
 
     def __repr__(self):
-        return f"FileTransformation({repr(self.transformations)})"
+        return f"{self.__class__.__name__}({repr(self.transformations)})"
