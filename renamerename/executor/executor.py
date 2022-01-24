@@ -9,7 +9,7 @@ class RenameExecutor:
             if not os.path.exists(v):
                 os.rename(k, v)
             else:
-                raise FileExistsError("File already exists.")
+                raise FileExistsError(f"The file {v} already exists.")
         
 
     def adjust_duplicates(self, names, filetransformation):
