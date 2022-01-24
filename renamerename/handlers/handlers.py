@@ -37,7 +37,7 @@ class FilenameHandler:
         return str(filename), ''.join(extensions)
 
 
-class DirectoryHandler:
+class FileListHandler:
     
     def __init__(self, names):
         self.names = names
