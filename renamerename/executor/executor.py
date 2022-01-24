@@ -10,6 +10,11 @@ class RenameExecutor:
                 os.rename(k, v)
             else:
                 raise FileExistsError(f"The file {v} already exists.")
+
+    
+    def display_output(self, names, filetransformation):
+        filetransformation = self.adjust_duplicates(names, filetransformation)
+        print(filetransformation)
         
 
     def adjust_duplicates(self, names, filetransformation):
