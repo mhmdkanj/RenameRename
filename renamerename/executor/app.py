@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--suffix", "-s", type=str, help="add a suffix to filtered filenames", required=False, default=None)
     parser.add_argument("--change-extension", "-e", type=str, help="change the filtered filenames' extensions", required=False, default=None)
     parser.add_argument("--add-numbering", "-n", type=str, help="change filtered filenames to same name suffixed with increasing numbers", required=False, default=None)
-    parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
+    parser.add_argument("--version", action="version", version="RenameRename 0.0.1")
     return parser.parse_args()
 
 def run(args=None):
