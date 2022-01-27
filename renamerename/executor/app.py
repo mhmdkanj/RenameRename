@@ -28,7 +28,8 @@ def run(args=None):
     assert os.path.isdir(args.directory), "Given directory is not a valid directory."
 
     # Get all (non-hidden) files in a directory:
-    names = [name for name in os.listdir(args.directory) if os.path.isfile(os.path.join(args.directory, name))]
+    names = [name for name in os.listdir(args.directory) 
+             if os.path.isfile(os.path.join(args.directory, name)) and not name.startswith(".")]
     
     file_list_handler = FileListHandler(names)
     file_list_handler.filter_names(filter=args.filter)
