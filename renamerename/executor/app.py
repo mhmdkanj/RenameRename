@@ -40,7 +40,7 @@ def run(args=None):
     if args.suffix:
         file_list_handler.add_suffix(args.suffix)
     if args.change_extension:
-        file_list_handler.change_extension(args.change_extensions)
+        file_list_handler.change_extension(args.change_extension)
     if args.add_numbering:
         file_list_handler.add_numbering(args.add_numbering)
 
