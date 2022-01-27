@@ -1,4 +1,5 @@
 import re
+import fnmatch
 from pathlib import Path
 from renamerename.handlers.filetransformation import FileTransformation 
 
@@ -50,12 +51,7 @@ class FileListHandler:
         if filter is None:
             self.filenames = self.names
         else:
-            pattern = re.compile(filter)
-            filter_results = []
-            for name in self.names:
-                if re.search(pattern, name):
-                    filter_results.append(name)
-            self.filenames = filter_results
+            self.filenames = fnmatch.filter(self.names, filter)
 
     
     def add_prefix(self, prefix):

@@ -15,7 +15,7 @@ class TestFileListHandler:
         names = ['aaa.png', 'bbb.txt', 'ccc.tar.gz', 'ddd.png', 
                 'eee.txt', 'fff', 'ggg', 'hhh.png', 'iii.tar.zip', 'jjj.pnj']
         handler = FileListHandler(names)
-        handler.filter_names(".png$")
+        handler.filter_names("*.png")
         return handler
 
 
