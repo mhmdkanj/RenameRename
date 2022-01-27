@@ -70,3 +70,14 @@ class TestFileListHandler:
             'ddd.png': 'me1.png',
             'hhh.png': 'me2.png'
         }
+
+    def test_multiple_actions(self, filelist_handler):
+        filelist_handler.add_numbering("img")
+        filelist_handler.add_prefix("pre_")
+        filelist_handler.change_extension(".jpeg")
+        filelist_handler.add_suffix("_post")
+        assert filelist_handler.filetransformations == {
+            'aaa.png': 'pre_img0_post.jpeg',
+            'ddd.png': 'pre_img1_post.jpeg',
+            'hhh.png': 'pre_img2_post.jpeg'           
+        }
