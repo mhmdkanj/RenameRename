@@ -1,8 +1,13 @@
 import argparse
+import logging
 import os
 from renamerename.handlers.handlers import FileListHandler
 from renamerename.executor.executor import RenameExecutor
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s"
+)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="%(prog)s dir [options]")
@@ -27,6 +32,8 @@ def run(args=None):
     
     file_list_handler = FileListHandler(names)
     file_list_handler.filter_names(filter=args.filter)
+
+    logging.info(f"Filtered files:\n{file_list_handler.filenames}")
 
     if args.prefix:
         file_list_handler.add_prefix(args.prefix)   
