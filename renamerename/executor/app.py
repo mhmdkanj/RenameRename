@@ -10,7 +10,7 @@ logging.basicConfig(
 )
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="%(prog)s dir [options]")
+    parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="renamerename dir [options]")
     parser.add_argument("directory", type=str, help="directory whose filenames are processed", metavar="dir")
     parser.add_argument("--only-output-results", "-o", action="store_true", help="only show renaming results without execution", required=False)
     parser.add_argument("--filter", "-f", type=str, help="filter the directory contents according to a Python regex", required=False, default=None)
