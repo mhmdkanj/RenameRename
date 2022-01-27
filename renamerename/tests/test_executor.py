@@ -1,5 +1,6 @@
 import os
 import pytest
+from pathlib import Path
 from pytest_mock import mocker
 from renamerename.executor.executor import RenameExecutor
 from renamerename.handlers.filetransformation import FileTransformation
@@ -10,8 +11,8 @@ class RenameMock:
         self.dirfiles = set(['aaa', 'bbb', 'ccc.py', 'ddd.tar.gz', 'eee.txt', 'fff', 'ggg'])
 
     def __call__(self, src, dst):
-        self.dirfiles.remove(src)
-        self.dirfiles.add(dst)
+        self.dirfiles.remove(Path(src).name)
+        self.dirfiles.add(Path(dst).name)
 
     def exists(self, name):
         return name in self.dirfiles
@@ -20,7 +21,7 @@ class TestRenameExecutor:
 
     @pytest.fixture
     def rename_executor(self):
-        return RenameExecutor()
+        return RenameExecutor(".")
 
     
     @pytest.fixture
