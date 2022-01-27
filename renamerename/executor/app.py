@@ -1,6 +1,5 @@
 import argparse
 import os
-from glob import glob
 from renamerename.handlers.handlers import FileListHandler
 from renamerename.executor.executor import RenameExecutor
 
