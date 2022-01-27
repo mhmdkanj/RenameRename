@@ -56,22 +56,22 @@ class FileListHandler:
     
     def add_prefix(self, prefix):
         for name in self.filenames:
-            self.filetransformations[name] = self.filenamehandler.add_prefix(name, prefix)
+            self.filetransformations[name] = self.filenamehandler.add_prefix(self.filetransformations[name], prefix)
 
 
     def add_suffix(self, suffix):
         for name in self.filenames:
-            self.filetransformations[name] = self.filenamehandler.add_suffix(name, suffix)
+            self.filetransformations[name] = self.filenamehandler.add_suffix(self.filetransformations[name], suffix)
 
 
     def change_extension(self, new_ext):
         for name in self.filenames:
-            self.filetransformations[name] = self.filenamehandler.change_extension(name, new_ext)
+            self.filetransformations[name] = self.filenamehandler.change_extension(self.filetransformations[name], new_ext)
 
     
     def add_numbering(self, prefix):
         for i, name in enumerate(self.filenames):
-            new_name = self.filenamehandler.change_name(name, prefix)
+            new_name = self.filenamehandler.change_name(self.filetransformations[name], prefix)
             self.filetransformations[name] = self.filenamehandler.add_suffix(new_name, str(i))
 
 
