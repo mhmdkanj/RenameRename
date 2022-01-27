@@ -3,13 +3,16 @@ from renamerename.handlers.handlers import FilenameHandler
 
 class RenameExecutor:
 
+    def __init__(self, directory):
+        self.directory = directory
+
     def execute(self, names, filetransformation):
         filetransformation = self.adjust_duplicates(names, filetransformation)
         for k, v in filetransformation.items():
-            if not os.path.exists(v):
-                os.rename(k, v)
+            if not os.path.exists(os.path.join(self.directory, v)):
+                os.rename(os.path.join(self.directory, k), os.path.join(self.directory, v))
             else:
-                raise FileExistsError(f"The file {v} already exists.")
+                raise FileExistsError(f"The file {os.path.join(self.directory, v)} already exists.")
 
     
     def display_output(self, names, filetransformation):
