@@ -51,3 +51,5 @@ def run(args=None):
         executor.display_output(file_list_handler.names, file_list_handler.filetransformations)
     else:
         executor.execute(file_list_handler.names, file_list_handler.filetransformations)
+
+    return 0
