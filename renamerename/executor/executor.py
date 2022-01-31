@@ -1,3 +1,4 @@
+import itertools
 import os
 from renamerename.handlers.handlers import FilenameHandler
 
@@ -5,14 +6,20 @@ class RenameExecutor:
 
     def __init__(self, directory):
         self.directory = directory
+        self.actual_transformation = {}
 
     def execute(self, names, filetransformation):
         filetransformation = self.adjust_duplicates(names, filetransformation)
-        for k, v in filetransformation.items():
+        for i, (k, v) in enumerate(filetransformation.items()):
             if not os.path.exists(os.path.join(self.directory, v)):
                 os.rename(os.path.join(self.directory, k), os.path.join(self.directory, v))
             else:
+                self.actual_transformation = dict(itertools.islice(filetransformation.items(), i))
+                # TODO: dump the actual transformations to var and file
+                # TODO: display the output
                 raise FileExistsError(f"The file {os.path.join(self.directory, v)} already exists.")
+        
+        self.actual_transformation = filetransformation
 
     
     def display_output(self, names, filetransformation):
@@ -38,4 +45,12 @@ class RenameExecutor:
                     filetransformation[next(iter(v))] = FilenameHandler.add_suffix(filetransformation[next(iter(v))], f" (1)")
 
         return filetransformation
+
+    @property
+    def actual_transformation(self):
+        return self._actual_transformation
+
+    @actual_transformation.setter
+    def actual_transformation(self, val):
+        self._actual_transformation = val
 
