@@ -15,7 +15,7 @@ class RenameMock:
         self.dirfiles.add(Path(dst).name)
 
     def exists(self, name):
-        return name in self.dirfiles
+        return Path(name).name in self.dirfiles
 
 class TestRenameExecutor:
 
@@ -100,3 +100,26 @@ class TestRenameExecutor:
         rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
         assert mocked_filesys.dirfiles == set(['fff (1)', 'foo_bbb', 'foo_ccc.py', 'foo_ddd (1)', 'foo_ddd (2)', 'fff', 'ggg'])
         mocker.resetall()
+
+
+    def test_execute_with_existing_file(self, rename_executor, get_filenames, mocker):
+        mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
+        mocker.patch('os.path.exists', mocked_filesys.exists)
+        filetransformation = FileTransformation(get_filenames)
+        filetransformation['aaa'] = '111'
+
+        with pytest.raises(FileExistsError):
+            rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
+
+        assert rename_executor.actual_transformation == {'aaa': '111'}
+
+
+    def test_execute_with_all_existing_files(self, rename_executor, get_filenames, mocker):
+        mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
+        mocker.patch('os.path.exists', mocked_filesys.exists)
+        filetransformation = FileTransformation(get_filenames)
+
+        with pytest.raises(FileExistsError):
+            rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
+
+        assert len(rename_executor.actual_transformation) == 0
