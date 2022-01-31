@@ -34,7 +34,10 @@ def run(args=None):
     file_list_handler = FileListHandler(names)
     file_list_handler.filter_names(filter=args.filter)
 
-    logging.info(f"Filtered files:\n{file_list_handler.filenames}")
+    logging.info(f"Filtered files ({len(file_list_handler.filenames)} matching):\n{file_list_handler.filenames}")
+
+    if not any([args.prefix, args.suffix, args.change_extension, args.add_numbering]):
+        return 1
 
     if args.prefix:
         file_list_handler.add_prefix(args.prefix)   
@@ -51,5 +54,8 @@ def run(args=None):
         executor.display_output(file_list_handler.names, file_list_handler.filetransformations)
     else:
         executor.execute(file_list_handler.names, file_list_handler.filetransformations)
+        logging.info(f"Renamed the following:\n{executor.actual_transformation}")
+        n = len(executor.actual_transformation)
+        logging.info(f"Successfully renamed {n}/{n} filtered files")
 
     return 0
