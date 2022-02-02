@@ -1,8 +1,11 @@
 from collections.abc import MutableMapping
 
 class FileTransformation(MutableMapping):
-    def __init__(self, filenames):
-        self.transformations = {name: name for name in filenames}
+    def __init__(self, transformations: dict):
+        if type(transformations) == dict:
+            self.transformations = transformations
+        else:
+            raise TypeError("An object type other than dict was passed to FileTransformation constructor.")
 
 
     def __setitem__(self, key, value):
@@ -34,6 +37,11 @@ class FileTransformation(MutableMapping):
 
     def __repr__(self):
         return f"{self.__class__.__name__}({repr(self.transformations)})"
+
+    
+    @classmethod
+    def from_list(cls, filenames):
+        return cls({name: name for name in filenames})
 
 
     def get_reversed(self):

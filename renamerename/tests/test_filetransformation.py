@@ -5,30 +5,31 @@ class TestFileTransformation:
 
     @pytest.fixture
     def file_transformation_basic(self):
-        names = ['one.py', 'two.txt', 'three.tar.gz']
-        return FileTransformation(names)
+        return FileTransformation({
+            'one.py': 'one.py',
+            'two.txt': 'two.txt',
+            'three.tar.gz': 'three.tar.gz'
+        })
 
 
     @pytest.fixture
     def file_transformation(self):
-        names = ['one.py', 'two.txt', 'three.tar.gz']
-        t = FileTransformation(names)
-        t['one.py'] = 'foo_one.py'
-        t['two.txt'] = 'two_bar.txt'
-        t['three.tar.gz'] = 'three.zip'
-        return t
+        return FileTransformation({
+            'one.py': 'foo_one.py',
+            'two.txt': 'two_bar.txt',
+            'three.tar.gz': 'three.zip',
+        })
 
 
     @pytest.fixture
     def file_transformation_with_duplicates(self):
-        names = ['file.py', 'file.txt', 'three.tar.gz', 'three', 'something']
-        t = FileTransformation(names)
-        t['file.py'] = 'file'
-        t['file.txt'] = 'file'
-        t['three.tar.gz'] = 'three.zip'
-        t['three'] = 'three.zip'
-        t['something'] = 'foo'
-        return t
+        return FileTransformation({
+            'file.py': 'file',
+            'file.txt': 'file',
+            'three.tar.gz': 'three.zip',
+            'three': 'three.zip',
+            'something': 'foo',
+        })
 
 
     def test_init(self, file_transformation_basic):
@@ -37,6 +38,10 @@ class TestFileTransformation:
             'two.txt': 'two.txt',
             'three.tar.gz': 'three.tar.gz'
         }
+
+    def test_from_list(self, file_transformation_basic):
+        names = ['one.py', 'two.txt', 'three.tar.gz']
+        assert file_transformation_basic.transformations == FileTransformation.from_list(names).transformations
 
 
     def test_get_set_item(self, file_transformation_basic):

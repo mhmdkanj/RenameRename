@@ -35,27 +35,29 @@ class TestRenameExecutor:
 
 
     # TODO: mock FileTransformation
-    def test_adjust_duplicates_none(self, rename_executor, get_filenames, get_names):
-        filetransformation = FileTransformation(get_filenames)
-        filetransformation['aaa'] = 'foo_aaa'
-        filetransformation['bbb'] = 'foo_bbb'
-        filetransformation['ccc.py'] = 'foo_ccc.py'
-        filetransformation['ddd.tar.gz'] = 'foo_ddd.tar.gz'
-        filetransformation['eee.txt'] = 'foo_eee.txt'
+    def test_adjust_duplicates_none(self, rename_executor, get_names):
+        filetransformation = FileTransformation({
+            'aaa': 'foo_aaa',
+            'bbb': 'foo_bbb',
+            'ccc.py': 'foo_ccc.py',
+            'ddd.tar.gz': 'foo_ddd.tar.gz',
+            'eee.txt': 'foo_eee.txt',
+        })
         assert not filetransformation.has_duplicates()
         actual_transformation = rename_executor.adjust_duplicates(get_names, filetransformation)
         assert actual_transformation == filetransformation
         assert not actual_transformation.has_duplicates()
 
 
-    def test_adjust_duplicates_one(self, rename_executor, get_filenames, get_names):
+    def test_adjust_duplicates_one(self, rename_executor, get_names):
         # duplicates are exclusively in filetransformation
-        filetransformation = FileTransformation(get_filenames)
-        filetransformation['aaa'] = 'dup'  # duplicate
-        filetransformation['bbb'] = 'foo_bbb'
-        filetransformation['ccc.py'] = 'foo_ccc.py'
-        filetransformation['ddd.tar.gz'] = 'foo_ddd.tar.gz'
-        filetransformation['eee.txt'] = 'dup' # duplicate
+        filetransformation = FileTransformation({
+            'aaa': 'dup',  # duplicate
+            'bbb': 'foo_bbb',
+            'ccc.py': 'foo_ccc.py',
+            'ddd.tar.gz':'foo_ddd.tar.gz',
+            'eee.txt': 'dup' # duplicate
+        })
         assert filetransformation.has_duplicates()
         actual_transformation = rename_executor.adjust_duplicates(get_names, filetransformation)
         assert actual_transformation == {
@@ -67,14 +69,15 @@ class TestRenameExecutor:
         }
 
     
-    def test_adjust_duplicates_two(self, rename_executor, get_filenames, get_names):
+    def test_adjust_duplicates_two(self, rename_executor, get_names):
         # duplicates reside in names and filetransformation
-        filetransformation = FileTransformation(get_filenames)
-        filetransformation['aaa'] = 'fff'  # duplicate with entry in names
-        filetransformation['bbb'] = 'foo_bbb'
-        filetransformation['ccc.py'] = 'foo_ccc.py'
-        filetransformation['ddd.tar.gz'] = 'foo_ddd.tar.gz'
-        filetransformation['eee.txt'] = 'foo_eee.txt'
+        filetransformation = FileTransformation({
+            'aaa': 'fff',  # duplicate with entry in names
+            'bbb': 'foo_bbb',
+            'ccc.py': 'foo_ccc.py',
+            'ddd.tar.gz': 'foo_ddd.tar.gz',
+            'eee.txt': 'foo_eee.txt',
+        })
         assert not filetransformation.has_duplicates()
         actual_transformation = rename_executor.adjust_duplicates(get_names, filetransformation)
         assert actual_transformation == {
@@ -86,17 +89,17 @@ class TestRenameExecutor:
         }
 
 
-    def test_execute(self, rename_executor, get_filenames, mocker):
+    def test_execute(self, rename_executor, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
         mocker.patch('os.path.exists', mocked_filesys.exists)
         
-        filetransformation = FileTransformation(get_filenames)
-        filetransformation['aaa'] = 'fff' # duplicate with file in filesystem
-        filetransformation['bbb'] = 'foo_bbb' 
-        filetransformation['ccc.py'] = 'foo_ccc.py'
-        filetransformation['ddd.tar.gz'] = 'foo_ddd'  # duplicate with below
-        filetransformation['eee.txt'] = 'foo_ddd'  # duplicate with above
-        
+        filetransformation = FileTransformation({
+            'aaa': 'fff', # duplicate with file in filesystem
+            'bbb': 'foo_bbb', 
+            'ccc.py': 'foo_ccc.py',
+            'ddd.tar.gz': 'foo_ddd',  # duplicate with below
+            'eee.txt': 'foo_ddd'  # duplicate with above
+        })
         rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
         assert mocked_filesys.dirfiles == set(['fff (1)', 'foo_bbb', 'foo_ccc.py', 'foo_ddd (1)', 'foo_ddd (2)', 'fff', 'ggg'])
         mocker.resetall()
@@ -105,7 +108,7 @@ class TestRenameExecutor:
     def test_execute_with_existing_file(self, rename_executor, get_filenames, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
         mocker.patch('os.path.exists', mocked_filesys.exists)
-        filetransformation = FileTransformation(get_filenames)
+        filetransformation = FileTransformation.from_list(get_filenames)
         filetransformation['aaa'] = '111'
 
         with pytest.raises(FileExistsError):
@@ -117,7 +120,7 @@ class TestRenameExecutor:
     def test_execute_with_all_existing_files(self, rename_executor, get_filenames, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
         mocker.patch('os.path.exists', mocked_filesys.exists)
-        filetransformation = FileTransformation(get_filenames)
+        filetransformation = FileTransformation.from_list(get_filenames)
 
         with pytest.raises(FileExistsError):
             rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
