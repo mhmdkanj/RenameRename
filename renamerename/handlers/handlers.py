@@ -44,7 +44,7 @@ class FileListHandler:
         self.names = names
         self.filenames = self.names
         self.filenamehandler = FilenameHandler()
-        self.filetransformations = FileTransformation(self.filenames)
+        self.filetransformations = FileTransformation.from_list(self.filenames)
 
 
     def filter_names(self, filter=None):
@@ -91,4 +91,4 @@ class FileListHandler:
     @filenames.setter
     def filenames(self, val):
         self._filenames = val
-        self.filetransformations = FileTransformation(self._filenames)
+        self.filetransformations = FileTransformation.from_list(self._filenames)
