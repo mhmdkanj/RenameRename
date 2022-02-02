@@ -1,4 +1,3 @@
-import os
 import pytest
 from pathlib import Path
 from pytest_mock import mocker
