@@ -30,14 +30,14 @@ class TestEncoder:
         }
 
     
-    # TODO:
-    #def test_save_transformation_to_json(self, transformation_encoder, file_transformation, tmp_path, mocker):
-    #    date_mocker = mocker.patch('renamerename.executor.encoder_decoder.datetime')
-    #    date_mocker.now.strftime.return_value = "X"
-    #    transformation_encoder.save_transformation_to_json(tmp_path, file_transformation)
-    #    assert 1 == 1
-    #   
-    #    mocker.resetall()
+    def test_save_transformation_to_json(self, transformation_encoder, file_transformation, mocker):
+        date_mocker = mocker.patch('renamerename.executor.encoder_decoder.datetime')
+        date_mocker.now().strftime.return_value = "DATE_TIME"
+        import renamerename
+        encode_mocker = mocker.patch.object(renamerename.executor.encoder_decoder.TransformationEncoder, 'encode_to_json_file')
+        transformation_encoder.save_transformation_to_json(".", file_transformation)
+        encode_mocker.assert_called_once_with(file_transformation, "./renaming_DATE_TIME.json")
+        mocker.resetall()
 
 
 class TestDecoder:
