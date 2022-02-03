@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument("--change-extension", "-e", type=str, help="change the filtered filenames' extensions", required=False, default=None)
     parser.add_argument("--add-numbering", "-n", type=str, help="change filtered filenames to same name suffixed with increasing numbers", required=False, default=None)
     parser.add_argument("--save-renaming", "-sr", action="store_true", help="create JSON file containing all files renamed", required=False)
-    parser.add_argument("--version", action="version", version="RenameRename 0.0.1")
+    parser.add_argument("--version", action="version", version="RenameRename 0.1.0")
     return parser.parse_args()
 
 def run(args=None):
@@ -38,6 +38,7 @@ def run(args=None):
 
     logging.info(f"Filtered files ({len(file_list_handler.filenames)} matching):\n{file_list_handler.filenames}")
 
+    # Only print out filtered files if no action is requested
     if not any([args.prefix, args.suffix, args.change_extension, args.add_numbering]):
         sys.exit(1)
 
@@ -53,6 +54,7 @@ def run(args=None):
     executor = RenameExecutor(args.directory, save_renaming=args.save_renaming)
     
     if args.only_output_results:
+        # Display output of actions without actually renaming/executing
         executor.display_output(file_list_handler.names, file_list_handler.filetransformations)
     else:
         try:
