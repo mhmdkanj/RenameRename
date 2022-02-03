@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import sys
 from renamerename.handlers.handlers import FileListHandler
 from renamerename.executor.executor import RenameExecutor
 
@@ -18,6 +19,7 @@ def parse_args():
     parser.add_argument("--suffix", "-s", type=str, help="add a suffix to filtered filenames", required=False, default=None)
     parser.add_argument("--change-extension", "-e", type=str, help="change the filtered filenames' extensions", required=False, default=None)
     parser.add_argument("--add-numbering", "-n", type=str, help="change filtered filenames to same name suffixed with increasing numbers", required=False, default=None)
+    parser.add_argument("--save-renaming", "-sr", action="store_true", help="create JSON file containing all files renamed", required=False)
     parser.add_argument("--version", action="version", version="RenameRename 0.0.1")
     return parser.parse_args()
 
@@ -37,7 +39,7 @@ def run(args=None):
     logging.info(f"Filtered files ({len(file_list_handler.filenames)} matching):\n{file_list_handler.filenames}")
 
     if not any([args.prefix, args.suffix, args.change_extension, args.add_numbering]):
-        return 1
+        sys.exit(1)
 
     if args.prefix:
         file_list_handler.add_prefix(args.prefix)   
@@ -48,14 +50,20 @@ def run(args=None):
     if args.add_numbering:
         file_list_handler.add_numbering(args.add_numbering)
 
-    executor = RenameExecutor(args.directory)
+    executor = RenameExecutor(args.directory, save_renaming=args.save_renaming)
     
     if args.only_output_results:
         executor.display_output(file_list_handler.names, file_list_handler.filetransformations)
     else:
-        executor.execute(file_list_handler.names, file_list_handler.filetransformations)
-        logging.info(f"Renamed the following:\n{executor.actual_transformation}")
-        n = len(executor.actual_transformation)
-        logging.info(f"Successfully renamed {n}/{n} filtered files")
+        try:
+            executor.execute(file_list_handler.names, file_list_handler.filetransformations)
+            logging.info(f"Renamed the following:\n{executor.actual_transformation}")
+            n = len(executor.actual_transformation)
+            logging.info(f"Successfully renamed {n}/{n} filtered files")
+        except FileExistsError:
+            logging.warning(f"{len(executor.actual_transformation)}/{len(file_list_handler.filetransformations)} were renamed")
+            logging.warning(f"Renamed the following files:\n{executor.actual_transformation}")
+            logging.error("Tried to rename a file, but the target already exists.")
+            sys.exit(2)
 
     return 0
