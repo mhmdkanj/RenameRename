@@ -28,7 +28,7 @@ class RenameExecutor:
                 if self.is_renaming_saved:
                     TransformationEncoder.save_transformation_to_json(self.directory, self.actual_transformation)
 
-                raise FileExistsError(f"The file {os.path.join(self.directory, v)} already exists.")
+                raise FileExistsError(f"The target filename {os.path.join(self.directory, v)} already exists.")
         
         if self.is_renaming_saved:
             TransformationEncoder.save_transformation_to_json(self.directory, filetransformation)
