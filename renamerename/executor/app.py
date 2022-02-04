@@ -40,7 +40,7 @@ def run(args=None):
 
     # Only print out filtered files if no action is requested
     if not any([args.prefix, args.suffix, args.change_extension, args.add_numbering]):
-        sys.exit(1)
+        return 1
 
     if args.prefix:
         file_list_handler.add_prefix(args.prefix)   
@@ -66,6 +66,6 @@ def run(args=None):
             logging.warning(f"{len(executor.actual_transformation)}/{len(file_list_handler.filetransformations)} were renamed")
             logging.warning(f"Renamed the following files:\n{executor.actual_transformation}")
             logging.error("Tried to rename a file, but the target already exists.")
-            sys.exit(2)
+            return 2
 
     return 0
