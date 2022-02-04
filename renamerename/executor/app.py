@@ -61,7 +61,7 @@ def run(args=None):
             logging.info(f"Renamed the following:\n{executor.actual_transformation}")
             n = len(executor.actual_transformation)
             logging.info(f"Successfully renamed {n}/{n} filtered files")
-        except FileExistsError as e:
+        except (FileExistsError, FileNotFoundError) as e:
             logging.warning(f"{len(executor.actual_transformation)}/{len(file_list_handler.filetransformations)} were renamed")
             logging.warning(f"Renamed the following files:\n{executor.actual_transformation}")
             logging.error(e)

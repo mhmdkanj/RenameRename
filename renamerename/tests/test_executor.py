@@ -116,7 +116,7 @@ class TestRenameExecutor:
         assert rename_executor.actual_transformation == {'aaa': '111'}
 
 
-    def test_execute_with_all_existing_files(self, rename_executor, get_filenames, mocker):
+    def test_execute_with_all_existing_targets(self, rename_executor, get_filenames, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
         mocker.patch('os.path.exists', mocked_filesys.exists)
         filetransformation = FileTransformation.from_list(get_filenames)
@@ -124,4 +124,18 @@ class TestRenameExecutor:
         with pytest.raises(FileExistsError):
             rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
 
+        assert len(rename_executor.actual_transformation) == 0
+
+    
+    def test_execute_with_non_existing_sources(self, rename_executor, get_filenames, mocker):
+        mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
+        mocker.patch('os.path.exists', mocked_filesys.exists)
+        filetransformation = FileTransformation({
+            "nonexisting": "foo_nonexisting",
+            "something_else.txt": "something_else_bar.txt"
+        })
+
+        with pytest.raises(FileNotFoundError):
+            rename_executor.execute(mocked_filesys.dirfiles, filetransformation)
+        
         assert len(rename_executor.actual_transformation) == 0
