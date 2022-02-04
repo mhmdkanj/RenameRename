@@ -20,6 +20,7 @@ class RenameExecutor:
         filetransformation = self.adjust_duplicates(names, filetransformation)
 
         for i, (k, v) in enumerate(filetransformation.items()):
+            # TODO: check if file k exists
             if not os.path.exists(os.path.join(self.directory, v)):
                 os.rename(os.path.join(self.directory, k), os.path.join(self.directory, v))
             else:
