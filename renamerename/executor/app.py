@@ -11,7 +11,7 @@ logging.basicConfig(
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="renamerename dir [options]")
-    parser.add_argument("directory", type=str, help="directory whose filenames are processed", metavar="dir")
+    parser.add_argument("--dir", type=str, help="directory whose filenames are processed", required=False, default=".", metavar="directory")
     parser.add_argument("--only-output-results", "-o", action="store_true", help="only show renaming results without execution", required=False)
     parser.add_argument("--filter", "-f", type=str, help="filter the directory contents according to a Python regex", required=False, default=None)
     parser.add_argument("--prefix", "-p", type=str, help="add a prefix to filtered filenames", required=False, default=None)
@@ -26,11 +26,11 @@ def run(args=None):
     if not args:
         args = parse_args()
     
-    assert os.path.isdir(args.directory), "Given directory is not a valid directory."
+    assert os.path.isdir(args.dir), "Given directory is not a valid directory."
 
     # Get all (non-hidden) files in a directory:
-    names = [name for name in os.listdir(args.directory) 
-             if os.path.isfile(os.path.join(args.directory, name)) and not name.startswith(".")]
+    names = [name for name in os.listdir(args.dir) 
+             if os.path.isfile(os.path.join(args.dir, name)) and not name.startswith(".")]
     
     file_list_handler = FileListHandler(names)
     file_list_handler.filter_names(filter=args.filter)
@@ -50,7 +50,7 @@ def run(args=None):
     if args.add_numbering:
         file_list_handler.add_numbering(args.add_numbering)
 
-    executor = RenameExecutor(args.directory, save_renaming=args.save_renaming)
+    executor = RenameExecutor(args.dir, save_renaming=args.save_renaming)
     
     if args.only_output_results:
         # Display output of actions without actually renaming/executing
