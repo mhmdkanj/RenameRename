@@ -20,15 +20,20 @@ class RenameExecutor:
         filetransformation = self.adjust_duplicates(names, filetransformation)
 
         for i, (k, v) in enumerate(filetransformation.items()):
-            # TODO: check if file k exists
-            if not os.path.exists(os.path.join(self.directory, v)):
-                os.rename(os.path.join(self.directory, k), os.path.join(self.directory, v))
-            else:
+            source_file_path = os.path.join(self.directory, k)
+            target_file_path = os.path.join(self.directory, v)
+            source_filename_exists = os.path.exists(source_file_path)
+            target_filename_exists = os.path.exists(target_file_path)
+            if not source_filename_exists or target_filename_exists:
                 self.actual_transformation = FileTransformation(dict(itertools.islice(filetransformation.items(), i)))
                 if self.is_renaming_saved:
                     TransformationEncoder.save_transformation_to_json(self.directory, self.actual_transformation)
-
-                raise FileExistsError(f"The target filename {os.path.join(self.directory, v)} already exists.")
+                if not source_filename_exists:
+                    raise FileNotFoundError(f"The source filename {source_file_path} does not exist.")
+                if target_filename_exists:
+                    raise FileExistsError(f"The target filename {target_file_path} already exists.")
+            else:
+                os.rename(source_file_path, target_file_path)
         
         if self.is_renaming_saved:
             TransformationEncoder.save_transformation_to_json(self.directory, filetransformation)
