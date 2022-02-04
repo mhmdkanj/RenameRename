@@ -1,7 +1,6 @@
 import argparse
 import logging
 import os
-import sys
 from renamerename.handlers.handlers import FileListHandler
 from renamerename.executor.executor import RenameExecutor
 
