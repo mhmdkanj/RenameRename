@@ -10,13 +10,13 @@ logging.basicConfig(
 )
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="renamerename dir [options]")
+    parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="renamerename [options]")
     parser.add_argument("--dir", type=str, help="directory whose filenames are processed", required=False, default=".", metavar="directory")
     parser.add_argument("--only-output-results", "-o", action="store_true", help="only show renaming results without execution", required=False)
-    parser.add_argument("--filter", "-f", type=str, help="filter the directory contents according to a Python regex", required=False, default=None)
+    parser.add_argument("--filter", "-f", type=str, help="filter the directory contents according to Unix patterns", required=False, default=None)
     parser.add_argument("--prefix", "-p", type=str, help="add a prefix to filtered filenames", required=False, default=None)
     parser.add_argument("--suffix", "-s", type=str, help="add a suffix to filtered filenames", required=False, default=None)
-    parser.add_argument("--change-extension", "-e", type=str, help="change the filtered filenames' extensions", required=False, default=None)
+    parser.add_argument("--change-extension", "-e", type=str, help="change the extension of the filtered filenames", required=False, default=None)
     parser.add_argument("--add-numbering", "-n", type=str, help="change filtered filenames to same name suffixed with increasing numbers", required=False, default=None)
     parser.add_argument("--save-renaming", "-sr", action="store_true", help="create JSON file containing all files renamed", required=False)
     from_file_group = parser.add_mutually_exclusive_group()
