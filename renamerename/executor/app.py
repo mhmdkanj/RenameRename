@@ -2,7 +2,7 @@ import argparse
 import logging
 import os
 from renamerename.handlers.handlers import FileListHandler
-from renamerename.executor.executor import RenameExecutor
+from renamerename.executor.executor import RenameExecutor, DuplicateFilenamesError
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,7 +19,10 @@ def parse_args():
     parser.add_argument("--change-extension", "-e", type=str, help="change the filtered filenames' extensions", required=False, default=None)
     parser.add_argument("--add-numbering", "-n", type=str, help="change filtered filenames to same name suffixed with increasing numbers", required=False, default=None)
     parser.add_argument("--save-renaming", "-sr", action="store_true", help="create JSON file containing all files renamed", required=False)
-    parser.add_argument("--version", action="version", version="RenameRename 0.1.0")
+    from_file_group = parser.add_mutually_exclusive_group()
+    from_file_group.add_argument("--from-json", type=str, help="rename set of files as described from JSON file", required=False, metavar="JSON file path")
+    from_file_group.add_argument("--undo-from-json", type=str, help="undo renaming of set of files based on saved renaming specification", required=False, metavar="JSON file path")
+    parser.add_argument("--version", action="version", version="RenameRename 0.2.0")
     return parser.parse_args()
 
 def run(args=None):
@@ -31,7 +34,32 @@ def run(args=None):
     # Get all (non-hidden) files in a directory:
     names = [name for name in os.listdir(args.dir) 
              if os.path.isfile(os.path.join(args.dir, name)) and not name.startswith(".")]
+
+    executor = RenameExecutor(args.dir, save_renaming=args.save_renaming)
     
+    # If actions are specified via file
+    if args.from_json or args.undo_from_json:
+        try:
+            undo = True if args.undo_from_json else False
+            filepath = args.undo_from_json if undo else args.from_json
+            if undo:
+                logging.info("Undo-ing renaming")
+            else:
+                logging.info("Renaming based on file specification")
+            
+            logging.info(f"Loading renaming specifications from the file {filepath}")
+            executor.execute_from_file(names, filepath, undo=undo)
+            logging.info(f"Renamed the following:\n{executor.actual_transformation}")
+            n = len(executor.actual_transformation)
+            logging.info(f"Successfully renamed {n}/{n} filtered files")
+        except (FileExistsError, FileNotFoundError, DuplicateFilenamesError) as e:
+            logging.warning(f"Renamed the following files:\n{executor.actual_transformation}")
+            logging.error(e)
+            return 2
+        
+        return 0
+
+
     file_list_handler = FileListHandler(names)
     file_list_handler.filter_names(filter=args.filter)
 
@@ -49,8 +77,6 @@ def run(args=None):
         file_list_handler.change_extension(args.change_extension)
     if args.add_numbering:
         file_list_handler.add_numbering(args.add_numbering)
-
-    executor = RenameExecutor(args.dir, save_renaming=args.save_renaming)
     
     if args.only_output_results:
         # Display output of actions without actually renaming/executing

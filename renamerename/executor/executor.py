@@ -2,12 +2,15 @@ import itertools
 import logging
 import os
 from renamerename.handlers.handlers import FilenameHandler, FileTransformation
-from renamerename.executor.encoder_decoder import TransformationEncoder
+from renamerename.executor.encoder_decoder import TransformationEncoder, TransformationDecoder
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s"
 ) 
+
+class DuplicateFilenamesError(RuntimeError):
+    pass
 
 class RenameExecutor:
 
@@ -35,8 +38,9 @@ class RenameExecutor:
             else:
                 os.rename(source_file_path, target_file_path)
         
+        self.actual_transformation = filetransformation
         if self.is_renaming_saved:
-            TransformationEncoder.save_transformation_to_json(self.directory, filetransformation)
+            TransformationEncoder.save_transformation_to_json(self.directory, self.actual_transformation)
 
     
     def display_output(self, names, filetransformation):
@@ -62,6 +66,22 @@ class RenameExecutor:
                     filetransformation[next(iter(v))] = FilenameHandler.add_suffix(filetransformation[next(iter(v))], f" (1)")
 
         return filetransformation  
+
+    
+    def execute_from_file(self, names, filepath, undo=False):
+        filetransformation = TransformationDecoder.decode_from_json_file(filepath)
+
+        if undo:
+            reversed_transformation = {}
+            for k, v in filetransformation.items():
+                if v not in reversed_transformation:
+                    reversed_transformation[v] = k
+                else:
+                    raise DuplicateFilenamesError(f"Two or more of the target filenames {os.path.join(self.directory, v)} imported from the JSON file were identical.")
+            
+            filetransformation = FileTransformation(reversed_transformation)
+
+        self.execute(names, filetransformation)
 
 
     @property
