@@ -1,4 +1,3 @@
-import re
 import fnmatch
 from pathlib import Path
 from renamerename.handlers.filetransformation import FileTransformation 
