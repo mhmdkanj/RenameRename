@@ -127,7 +127,7 @@ class TestRenameExecutor:
         assert len(rename_executor.actual_transformation) == 0
 
     
-    def test_execute_with_non_existing_sources(self, rename_executor, get_filenames, mocker):
+    def test_execute_with_non_existing_sources(self, rename_executor, mocker):
         mocked_filesys = mocker.patch('os.rename', new_callable=RenameMock)
         mocker.patch('os.path.exists', mocked_filesys.exists)
         filetransformation = FileTransformation({
