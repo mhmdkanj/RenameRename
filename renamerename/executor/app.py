@@ -1,3 +1,5 @@
+"""Main entrypoint logic"""
+
 import argparse
 import logging
 import os
@@ -26,6 +28,8 @@ def parse_args():
     return parser.parse_args()
 
 def run(args=None):
+    """Main entrypoint script"""
+
     if not args:
         args = parse_args()
     
