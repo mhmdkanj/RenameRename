@@ -1,3 +1,5 @@
+"""RenameRename entrypoint script"""
+
 import sys
 from renamerename.executor import app
 
