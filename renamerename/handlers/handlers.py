@@ -19,6 +19,8 @@ class FilenameHandler:
     @staticmethod
     def change_extension(name, new_ext):
         filename, _ = FilenameHandler.get_components(name)
+        if not new_ext.startswith(".") and len(new_ext) != 0:
+            new_ext = "." + new_ext
         return filename + new_ext
 
     
