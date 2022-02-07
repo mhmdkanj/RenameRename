@@ -5,6 +5,7 @@ import logging
 import os
 from renamerename.handlers.handlers import FileListHandler
 from renamerename.executor.executor import RenameExecutor, DuplicateFilenamesError
+from renamerename import __version__
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,7 +25,7 @@ def parse_args():
     from_file_group = parser.add_mutually_exclusive_group()
     from_file_group.add_argument("--from-json", type=str, help="rename set of files as described from JSON file", required=False, metavar="JSON file path")
     from_file_group.add_argument("--undo-from-json", type=str, help="undo renaming of set of files based on saved renaming specification", required=False, metavar="JSON file path")
-    parser.add_argument("--version", action="version", version="RenameRename 0.2.0")
+    parser.add_argument("--version", action="version", version=f"RenameRename {__version__}")
     return parser.parse_args()
 
 def run(args=None):
