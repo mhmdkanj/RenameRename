@@ -7,7 +7,7 @@ class FileTransformation(MutableMapping):
     """Wrapper class as dictionary or mapping of source filename to target filename."""
 
     def __init__(self, transformations: dict):
-        """[summary]
+        """Constructor
 
         :param dict transformations: mapping of source to target filenames
         :raises TypeError: type of parameter given is not a dict
