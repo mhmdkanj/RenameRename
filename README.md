@@ -53,11 +53,13 @@ Filtering of files is done via Unix filename patterns supplied with the `--filte
 
 You can check which files are filtered out by providing the filter option without any actions.
 ```sh
-python3 -m renamerename --filter img_*   
-# OUTPUT: filter all files beginning with "img_"
+python3 -m renamerename --filter "img_*"   
+# OUTPUT: filter all files beginning with: img_
 ```
 
-*NOTE*: RenameRename acts on non-hidden files inside a directory. Also, the file search is non-recursive and does not take into account directory names.
+**NOTES**: 
+- It is necessary to enclose filter arguments with double quotation marks `" "`, as this would allow you to pass the literal filter expression to the command (otherwise, the shell would process it, resolve the filenames itself, and pass invalid arguments to the command).
+- RenameRename acts on non-hidden files inside a directory. Also, the file search is non-recursive and does not take into account directory names.
 
 ### Basic Actions
 
@@ -75,7 +77,7 @@ You can of course use multiple actions at the same time.
 
 For instance, if you want to add a prefix, suffix, and change the extension of files beginning with "myfile" and ending with ".png", execute the following:
 ```sh
-python3 -m renamerename --filter myfile*.png --prefix foo_ --suffix _bar --change-extension .jpeg
+python3 -m renamerename --filter "myfile*.png" --prefix foo_ --suffix _bar --change-extension .jpeg
 # Filtered files: myfile_a.png , myfileee.png , myfile_somechars.png
 # OUTPUT:
 #        myfile_a.png  --->  foo_myfile_a_bar.jpeg
