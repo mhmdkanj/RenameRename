@@ -31,7 +31,7 @@ setup(
     python_requires='>=3.6.0',
     entry_points={
         "console_scripts": [
-            "rename-rename=renamerename.__main__:main",
+            "renamerename=renamerename.__main__:main",
         ]
     }
 )
