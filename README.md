@@ -31,9 +31,9 @@ pip install -e dir/RenameRename
 
 ## Usage
 
-In order to use RenameRename, run the Python package using:
+In order to use RenameRename, run the Python package with:
 ```sh
-python3 -m renamerename [options]
+renamerename [options]
 ```
 
 ### Filtering
@@ -53,7 +53,7 @@ Filtering of files is done via Unix filename patterns supplied with the `--filte
 
 You can check which files are filtered out by providing the filter option without any actions.
 ```sh
-python3 -m renamerename --filter "img_*"   
+renamerename --filter "img_*"   
 # OUTPUT: filter all files beginning with: img_
 ```
 
@@ -77,7 +77,7 @@ You can of course use multiple actions at the same time.
 
 For instance, if you want to add a prefix, suffix, and change the extension of files beginning with "myfile" and ending with ".png", execute the following:
 ```sh
-python3 -m renamerename --filter "myfile*.png" --prefix foo_ --suffix _bar --change-extension .jpeg
+renamerename --filter "myfile*.png" --prefix foo_ --suffix _bar --change-extension .jpeg
 # Filtered files: myfile_a.png , myfileee.png , myfile_somechars.png
 # OUTPUT:
 #        myfile_a.png  --->  foo_myfile_a_bar.jpeg
@@ -92,7 +92,7 @@ you can do so by supplying the `--only-output-results` or `-o` flag.
 This way, you can review if the renaming will be done as intended and without any consequences.
 
 ```sh
-python3 -m renamerename [actions] -o
+renamerename [actions] -o
 ```
 
 ### Saving What Was Renamed to What
@@ -101,7 +101,7 @@ If you want to save all the source and target filenames for future reference (in
 you can supply the `--save-renaming` flag to do that.
 
 ```sh
-python3 -m renamerename [actions] --save-renaming
+renamerename [actions] --save-renaming
 ```
 
 This creates a `JSON` file in the directory supplied with `--dir` (or if no directory was supplied, the current directory) that contains the necessary changes.
@@ -122,7 +122,7 @@ The supplied file, via the `--from-json` option, should be a dictionary of sourc
 
 Suppose this file was called `renaming.json`, you can execute the renaming by:
 ```sh
-python3 -m renamerename --dir DIR --from-json renaming.json
+renamerename --dir DIR --from-json renaming.json
 ```
 
 ### Undo Renaming
@@ -135,7 +135,7 @@ The JSON file created in that call needs to be supplied to the `--undo-from-json
 The mapping is reversed internally.
 
 ```sh
-python3 -m renamerename --dir DIR --undo-from-json renaming.json
+renamerename --dir DIR --undo-from-json renaming.json
 ```
 
 Otherwise, if you do not have the JSON file, you can create one manually and execute RenameRename with the `--from-json` option.
