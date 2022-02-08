@@ -8,6 +8,9 @@ then hopefully RenameRename can cater to your bulk renaming needs. 😄
 
 The main usage of RenameRename is as a CLI tool.
 Nevertheless, it can also be used as a package of modules containing utility classes and functions for your own modules.
+
+Feel free to take a look at the [API reference / documentation](https://mhmdkanj.github.io/RenameRename/build-docs/html/index.html).
+
 ## Requirements
 
 To run the CLI tool, you primarily need the following installed on your system:
