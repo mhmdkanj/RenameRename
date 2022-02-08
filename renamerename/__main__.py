@@ -3,5 +3,8 @@
 import sys
 from renamerename.executor import app
 
-if __name__ == "__main__":
+def main():
     sys.exit(app.run())
+
+if __name__ == "__main__":
+    main()

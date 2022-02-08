@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="rename-rename",
+    name="renamerename",
     version="0.2.0",
     description="Bulk renaming of files made easy",
     long_description=README,
@@ -26,5 +26,10 @@ setup(
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
     install_requires=[],
-    python_requires='>=3.6.0'
+    python_requires='>=3.6.0',
+    entry_points={
+        "console_scripts": [
+            "rename-rename=renamerename.__main__:main",
+        ]
+    }
 )
