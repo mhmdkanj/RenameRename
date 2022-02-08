@@ -178,12 +178,12 @@ optional arguments:
 
 The RenameRename Python package includes unit tests for developers who wish to locally test it (especially upon contributing).
 
-For that, you first need to install `pytest` via:
+For that, you first need to install the testing dependencies via:
 ```sh
-pip3 install pytest
+pip install -r dev-requirements.txt
 ```
 
-To run the tests, execute the following:
+The tests can be run with `pytest` and executed via the following:
 ```sh
 cd repository_root   # enter the root directory of the repository
 pytest
