@@ -33,7 +33,6 @@ pip install -e dir/RenameRename
 
 In order to use RenameRename, run the Python package using:
 ```sh
-cd dir
 python3 -m renamerename [options]
 ```
 
