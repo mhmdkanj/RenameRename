@@ -18,12 +18,15 @@ To run the CLI tool, you primarily need the following installed on your system:
 
 ## Install
 
+To install the package, you can do so with [pip](https://pypi.org/project/pip/).
+
 <TODO: provide a pip-installable package>
 
-Just clone the repository in the directory `dir` of your choice via:
+Just clone the repository in the directory `dir` of your choice, and then install it with `pip`, as such:
 
 ```sh
 git clone https://github.com/mhmdkanj/RenameRename.git dir
+pip install -e dir/RenameRename
 ```
 
 ## Usage
