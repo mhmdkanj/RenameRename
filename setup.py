@@ -29,6 +29,10 @@ setup(
     include_package_data=True,
     install_requires=[],
     python_requires='>=3.6.0',
+    tests_require=[
+        'pytest',
+        'pytest-mock'
+    ],
     entry_points={
         "console_scripts": [
             "renamerename=renamerename.__main__:main",
