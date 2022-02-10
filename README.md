@@ -188,3 +188,21 @@ The tests can be run with `pytest` and executed via the following:
 cd repository_root   # enter the root directory of the repository
 pytest
 ```
+
+## Documentation
+
+The [documentation](https://mhmdkanj.github.io/RenameRename/build-docs/html/index.html) (mostly the API reference) to the Python package currently resides on GitHub Pages.
+
+For contributing developers, building the docs locally requires the following:
+
+```sh
+pip install -r docs/docs-requirements.txt
+apt-get install make
+```
+
+You can then build the docs with:
+
+```sh
+cd docs   # relative to repository root
+make html
+```
