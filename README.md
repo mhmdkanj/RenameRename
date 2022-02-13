@@ -53,11 +53,11 @@ Filtering of files is done via Unix filename patterns supplied with the `--filte
 
 You can check which files are filtered out by providing the filter option without any actions.
 ```sh
-renamerename --filter "img_*"   
+renamerename --filter "img_*"
 # OUTPUT: filter all files beginning with: img_
 ```
 
-**NOTES**: 
+**NOTES**:
 - It is necessary to enclose filter arguments with double quotation marks `" "`, as this would allow you to pass the literal filter expression to the command (otherwise, the shell would process it, resolve the filenames itself, and pass invalid arguments to the command).
 - RenameRename acts on non-hidden files inside a directory. Also, the file search is non-recursive and does not take into account directory names.
 

@@ -1,7 +1,12 @@
 [flake8]
-filename = 
-    ./renamerename/**/*.py
-    ./setup.py
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    venv,
+    .tox,
+    tmp
 max-line-length = 140
 per-file-ignores =
     # 'pytest_mock.mocker' imported but unused
