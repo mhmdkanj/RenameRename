@@ -3,6 +3,7 @@
 from collections.abc import MutableMapping
 from typing import List, Dict
 
+
 class FileTransformation(MutableMapping):
     """Wrapper class as dictionary or mapping of source filename to target filename."""
 
@@ -17,26 +18,20 @@ class FileTransformation(MutableMapping):
         else:
             raise TypeError("An object type other than dict was passed to FileTransformation constructor.")
 
-
     def __setitem__(self, key, value):
         self.transformations[key] = value
-
 
     def __getitem__(self, key):
         return self.transformations[key]
 
-
     def __delitem__(self, key):
         del self.transformations[key]
-
 
     def __iter__(self):
         return iter(self.transformations)
 
-
     def __len__(self):
         return len(self.transformations)
-
 
     def __str__(self):
         output = ''
@@ -44,11 +39,9 @@ class FileTransformation(MutableMapping):
             output += k + " ----> " + v + "\n"
         return output
 
-
     def __repr__(self):
         return f"{self.__class__.__name__}({repr(self.transformations)})"
 
-    
     @classmethod
     def from_list(cls, filenames: List[str]) -> "FileTransformation":
         """Construct FileTransformation instance from a list of filenames by mapping each filename to itself.
@@ -58,7 +51,6 @@ class FileTransformation(MutableMapping):
         :rtype: FileTransformation
         """
         return cls({name: name for name in filenames})
-
 
     def get_reversed(self) -> Dict[str, List[str]]:
         """Reverse mapping of source to target filenames, while maintain information on duplicate target filenames
@@ -70,7 +62,6 @@ class FileTransformation(MutableMapping):
         for k, v in self.transformations.items():
             reversed_transformations.setdefault(v, []).append(k)
         return reversed_transformations
-
 
     def has_duplicates(self) -> bool:
         """Check if target filenames contain duplicates.

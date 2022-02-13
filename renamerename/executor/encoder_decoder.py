@@ -11,6 +11,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s"
 )
 
+
 class TransformationEncoder:
     """Serialization utility class for FileTransformation instance"""
 
@@ -26,14 +27,14 @@ class TransformationEncoder:
 
     @staticmethod
     def save_transformation_to_json(directory: str, filetransformation: FileTransformation):
-        """Serialize FileTransformation instance to JSON file named renaming_DATE_TIME.json 
+        """Serialize FileTransformation instance to JSON file named renaming_DATE_TIME.json.
 
         :param str directory: parent directory where JSON file is saved
         :param filetransformation: FileTransformation instance
         """
         save_path = os.path.join(directory, "renaming_" + datetime.now().strftime("%d%m%Y_%H%M%S") + ".json")
         TransformationEncoder.encode_to_json_file(filetransformation, save_path)
-        logging.info(f"Saved renaming to {save_path}") 
+        logging.info(f"Saved renaming to {save_path}")
 
 
 class TransformationDecoder:
@@ -50,4 +51,3 @@ class TransformationDecoder:
         with open(path, 'r') as f:
             content = json.load(f)
         return FileTransformation(content)
-

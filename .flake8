@@ -1,0 +1,12 @@
+[flake8]
+filename = 
+    ./renamerename/**/*.py
+    ./setup.py
+max-line-length = 140
+per-file-ignores =
+    # 'pytest_mock.mocker' imported but unused
+    # redefinition of unused 'mocker' from line 3
+    ./renamerename/tests/test_executor.py: F401, F811
+    # 'pytest_mock.mocker' imported but unused
+    # redefinition of unused 'mocker' from line 3
+    ./renamerename/tests/test_encoder_decoder.py: F401, F811

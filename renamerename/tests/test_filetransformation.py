@@ -1,6 +1,7 @@
 import pytest
 from renamerename.handlers.filetransformation import FileTransformation
 
+
 class TestFileTransformation:
 
     @pytest.fixture
@@ -11,7 +12,6 @@ class TestFileTransformation:
             'three.tar.gz': 'three.tar.gz'
         })
 
-
     @pytest.fixture
     def file_transformation(self):
         return FileTransformation({
@@ -19,7 +19,6 @@ class TestFileTransformation:
             'two.txt': 'two_bar.txt',
             'three.tar.gz': 'three.zip',
         })
-
 
     @pytest.fixture
     def file_transformation_with_duplicates(self):
@@ -30,7 +29,6 @@ class TestFileTransformation:
             'three': 'three.zip',
             'something': 'foo',
         })
-
 
     def test_init(self, file_transformation_basic):
         assert file_transformation_basic.transformations == {
@@ -43,19 +41,16 @@ class TestFileTransformation:
         names = ['one.py', 'two.txt', 'three.tar.gz']
         assert file_transformation_basic.transformations == FileTransformation.from_list(names).transformations
 
-
     def test_get_set_item(self, file_transformation_basic):
         assert file_transformation_basic['one.py'] == 'one.py'
         file_transformation_basic['one.py'] = 'something_else'
         assert file_transformation_basic['one.py'] == 'something_else'
-
 
     def test_str_output(self, file_transformation):
         expected_str = "one.py ----> foo_one.py\n"\
                        "two.txt ----> two_bar.txt\n"\
                        "three.tar.gz ----> three.zip\n"
         assert str(file_transformation) == expected_str
-
 
     def test_get_reversed(self, file_transformation):
         assert file_transformation.get_reversed() == {
@@ -64,7 +59,6 @@ class TestFileTransformation:
             'three.zip': ['three.tar.gz']
         }
 
-
     def test_get_reversed_with_duplicates(self, file_transformation_with_duplicates):
         assert file_transformation_with_duplicates.get_reversed() == {
             'file': ['file.py', 'file.txt'],
@@ -72,10 +66,8 @@ class TestFileTransformation:
             'foo': ['something']
         }
 
-
     def test_has_no_duplicates(self, file_transformation):
         assert not file_transformation.has_duplicates()
-
 
     def test_has_duplicates(self, file_transformation_with_duplicates):
         assert file_transformation_with_duplicates.has_duplicates()
