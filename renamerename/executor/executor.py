@@ -10,11 +10,13 @@ from renamerename.executor.encoder_decoder import TransformationEncoder, Transfo
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s"
-) 
+)
+
 
 class DuplicateFilenamesError(RuntimeError):
     """RuntimeError wrapper for loaded mapping with common values"""
     pass
+
 
 class RenameExecutor:
     """Renaming executor on the filesystem."""
@@ -55,12 +57,11 @@ class RenameExecutor:
                     raise FileExistsError(f"The target filename {target_file_path} already exists.")
             else:
                 os.rename(source_file_path, target_file_path)
-        
+
         self.actual_transformation = filetransformation
         if self.is_renaming_saved:
             TransformationEncoder.save_transformation_to_json(self.directory, self.actual_transformation)
 
-    
     def display_output(self, names: List[str], filetransformation: FileTransformation):
         """Display output of renaming to STDOUT without actual execution.
 
@@ -69,7 +70,6 @@ class RenameExecutor:
         """
         filetransformation = self.adjust_duplicates(names, filetransformation)
         print(filetransformation)
-        
 
     def adjust_duplicates(self, names: List[str], filetransformation: FileTransformation) -> FileTransformation:
         """Resolve duplicate filenames in list of target filenames.
@@ -81,7 +81,7 @@ class RenameExecutor:
         """
         # files not part of filter
         untouched_files = set(names) - set(filetransformation)
-        
+
         # reverse the transformations dict
         reversed_transformations = filetransformation.get_reversed()
 
@@ -93,13 +93,12 @@ class RenameExecutor:
             elif len(v) == 1:
                 # check if a transformed filename and an unfiltered file are duplicates
                 if k in untouched_files:
-                    filetransformation[next(iter(v))] = FilenameHandler.add_suffix(filetransformation[next(iter(v))], f" (1)")
+                    filetransformation[next(iter(v))] = FilenameHandler.add_suffix(filetransformation[next(iter(v))], " (1)")
 
-        return filetransformation  
+        return filetransformation
 
-    
     def execute_from_file(self, names: List[str], filepath: str, undo: Optional[bool] = False):
-        """Rename files on filesystem based on provided mapping from file.  
+        """Rename files on filesystem based on provided mapping from file.
 
         :param List[str] names: list of all filenames in :py:attr:`~directory`
         :param str filepath: path to file with source to target filename mapping
@@ -116,12 +115,13 @@ class RenameExecutor:
                 if v not in reversed_transformation:
                     reversed_transformation[v] = k
                 else:
-                    raise DuplicateFilenamesError(f"Two or more of the target filenames {os.path.join(self.directory, v)} imported from the JSON file were identical.")
-            
+                    raise DuplicateFilenamesError(f"Two or more of the target filenames "
+                                                  f"{os.path.join(self.directory, v)} imported from the "
+                                                  f"JSON file were identical.")
+
             filetransformation = FileTransformation(reversed_transformation)
 
         self.execute(names, filetransformation)
-
 
     @property
     def actual_transformation(self) -> FileTransformation:
@@ -132,7 +132,6 @@ class RenameExecutor:
         """
         return self._actual_transformation
 
-
     @actual_transformation.setter
     def actual_transformation(self, val: FileTransformation):
         """Setter for actual renaming as FileTransformation.
@@ -140,4 +139,3 @@ class RenameExecutor:
         :param FileTransformation val: FileTransformation instance
         """
         self._actual_transformation = val
-

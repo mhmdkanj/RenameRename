@@ -55,7 +55,7 @@ class TestFilenameHandler:
 
     def test_get_components_raw(self, GetFilenameHandler):
         assert GetFilenameHandler.get_components("file") == ("file", "")
-    
+
     def test_get_components_ext(self, GetFilenameHandler):
         assert GetFilenameHandler.get_components("file.txt") == ("file", ".txt")
 
