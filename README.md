@@ -196,7 +196,7 @@ The [documentation](https://mhmdkanj.github.io/RenameRename/build-docs/html/inde
 For contributing developers, building the docs locally requires the following:
 
 ```sh
-pip install -r docs/docs-requirements.txt
+pip install -r docs/requirements-docs.txt
 apt-get install make
 ```
 
