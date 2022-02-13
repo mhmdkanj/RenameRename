@@ -61,3 +61,7 @@ flake8
 RenameRename is tested through unit tests.
 If applicable and when contributing Python code, please add a unit test that fails until the bug is resolved or the feature is implemented.
 Also, please ensure that already existing tests pass.
+
+## Changelog
+
+When adding, removing, or fixing code, please add a brief entry to the [changelog](./CHANGELOG.md) describing what was contributed.
