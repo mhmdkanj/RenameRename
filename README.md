@@ -180,7 +180,7 @@ The RenameRename Python package includes unit tests for developers who wish to l
 
 For that, you first need to install the testing dependencies via:
 ```sh
-pip install -r dev-requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 The tests can be run with `pytest` and executed via the following:
