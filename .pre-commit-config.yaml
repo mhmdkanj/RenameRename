@@ -11,4 +11,3 @@ repos:
       - id: flake8
         args:
           - --config=./.flake8
-        exclude: ...
