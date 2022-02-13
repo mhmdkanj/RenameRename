@@ -3,7 +3,7 @@
 import fnmatch
 from pathlib import Path
 from typing import List, Tuple, Optional
-from renamerename.handlers.filetransformation import FileTransformation 
+from renamerename.handlers.filetransformation import FileTransformation
 
 
 class FilenameHandler:
@@ -19,7 +19,6 @@ class FilenameHandler:
         :rtype: str
         """
         return prefix + name
-    
 
     @staticmethod
     def add_suffix(name: str, suffix: str) -> str:
@@ -32,7 +31,6 @@ class FilenameHandler:
         """
         filename, ext = FilenameHandler.get_components(name)
         return filename + suffix + ext
-
 
     @staticmethod
     def change_extension(name: str, new_ext: str) -> str:
@@ -48,7 +46,6 @@ class FilenameHandler:
             new_ext = "." + new_ext
         return filename + new_ext
 
-    
     @staticmethod
     def change_name(name: str, new_filename: str) -> str:
         """Change filename to new name.
@@ -59,8 +56,7 @@ class FilenameHandler:
         :rtype: str
         """
         _, ext = FilenameHandler.get_components(name)
-        return new_filename + ext 
-    
+        return new_filename + ext
 
     @staticmethod
     def get_components(name: str) -> Tuple[str]:
@@ -79,7 +75,7 @@ class FilenameHandler:
 
 class FileListHandler:
     """Utility class for basic actions on a set of filenames."""
-    
+
     def __init__(self, names: List[str]):
         """Constructor
 
@@ -89,7 +85,6 @@ class FileListHandler:
         self.filenames = self.names
         self.filenamehandler = FilenameHandler()
         self.filetransformations = FileTransformation.from_list(self.filenames)
-
 
     def filter_names(self, filter: Optional[str] = None):
         """Filter filenames based on a Unix pattern filter.
@@ -101,15 +96,13 @@ class FileListHandler:
         else:
             self.filenames = fnmatch.filter(self.names, filter)
 
-    
     def add_prefix(self, prefix: str):
-        """Add prefixes to filtered filenames. 
+        """Add prefixes to filtered filenames.
 
         :param str prefix: prefix to be prepended to filtered filenames
         """
         for name in self.filenames:
             self.filetransformations[name] = self.filenamehandler.add_prefix(self.filetransformations[name], prefix)
-
 
     def add_suffix(self, suffix: str):
         """Add suffixes to filtered filenames.
@@ -119,7 +112,6 @@ class FileListHandler:
         for name in self.filenames:
             self.filetransformations[name] = self.filenamehandler.add_suffix(self.filetransformations[name], suffix)
 
-
     def change_extension(self, new_ext: str):
         """Change extensions of filtered filenames.
 
@@ -128,7 +120,6 @@ class FileListHandler:
         for name in self.filenames:
             self.filetransformations[name] = self.filenamehandler.change_extension(self.filetransformations[name], new_ext)
 
-    
     def add_numbering(self, prefix: str):
         """Change filtered filenames to same name with numbered suffixes.
 
@@ -138,7 +129,6 @@ class FileListHandler:
             new_name = self.filenamehandler.change_name(self.filetransformations[name], prefix)
             self.filetransformations[name] = self.filenamehandler.add_suffix(new_name, str(i))
 
-
     @property
     def filetransformations(self) -> FileTransformation:
         """Getter for mapping of source to target filenames.
@@ -147,7 +137,6 @@ class FileListHandler:
         :rtype: FileTransformation
         """
         return self._filetransformations
-
 
     @filetransformations.setter
     def filetransformations(self, val: FileTransformation):
