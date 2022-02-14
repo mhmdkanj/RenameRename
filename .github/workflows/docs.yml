@@ -36,6 +36,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: docs-build-artifacts
+      - name: Debug
+        run: ls .
       - name: Install and configure dependencies
         run: |
           npm install -g --silent gh-pages@2.0.1
