@@ -13,13 +13,15 @@ cd "$GITHUB_WORKSPACE"
 git config user.name "$GITHUB_ACTOR"
 git config user.email "${GITHUB_ACTOR}@bots.github.com"
 
-git checkout --track "${remote_name}/${target_branch}"
-git merge "${remote_name}/${main_branch}"
+git fetch
+git checkout "${target_branch}"
+git rebase "${main_branch}"
 
 cd docs
 make html BUILDDIR="$build_dir"
 cd "$GITHUB_WORKSPACE"
 git add .
+git status
 
 git commit -m "docs: update GitHub Pages"
 if [ $? -ne 0 ]; then
