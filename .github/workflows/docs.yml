@@ -13,35 +13,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r docs/requirements-docs.txt
-      - name: Build docs
-        run: |
-          cd docs
-          make html
-      - name: Archive docs build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: docs-build-artifacts
-          path: docs/build
-
-  docs-deploy:
-    needs: docs-build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '8.10.0'
-      - name: Download docs build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: docs-build-artifacts
-      - name: Debug
-        run: ls .
-      - name: Install and configure dependencies
-        run: |
-          npm install -g --silent gh-pages@2.0.1
-          git config user.email "mhmd.kanj@gmail.com"
-          git config user.name "Mohamad Kanj"
-      - name: Deploy docs to GH Pages
-        run: gh-pages --dist html
+      - name: Build & deploy docs
+        run: sh ./docs/update-gh-pages.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.deploy_token }}
