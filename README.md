@@ -1,5 +1,7 @@
 # RenameRename
 
+[![codecov](https://codecov.io/gh/mhmdkanj/RenameRename/branch/main/graph/badge.svg?token=VYS7K7KRVB)](https://codecov.io/gh/mhmdkanj/RenameRename)
+
 **RenameRename** is a command-line utility app that bulk renames a set of files based on some specifications.
 What's special about this tool, among so many other similar ones, is that it's straightforward to use.
 
