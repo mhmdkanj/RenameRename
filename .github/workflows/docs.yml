@@ -41,7 +41,7 @@ jobs:
       - name: Install and configure dependencies
         run: |
           npm install -g --silent gh-pages@2.0.1
-          git config user.email "ci-build@mhmdkanj.com"
-          git config user.name "ci-build"
+          git config user.email "mhmd.kanj@gmail.com"
+          git config user.name "Mohamad Kanj"
       - name: Deploy docs to GH Pages
         run: gh-pages --dist html
