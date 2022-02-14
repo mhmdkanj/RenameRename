@@ -29,4 +29,10 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements-dev.txt
       - name: Run unit tests
-        run: pytest --junitxml=junit/test-results.xml --cov=renamerename --cov-report=xml
+        run: pytest --junitxml=junit/test-results.xml --cov=renamerename --cov-report=xml:coverage.xml --cov-report=term
+      - name: Generate coverage report
+        run: coverage report
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          files: coverage.xml
