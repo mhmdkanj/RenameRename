@@ -19,7 +19,8 @@ git rebase "${remote_name}/${main_branch}"
 
 cd docs
 make html BUILDDIR="$build_dir"
-git add "$build_dir"
+cd "$GITHUB_WORKSPACE"
+git add .
 
 git commit -m "docs: update GitHub Pages"
 if [ $? -ne 0 ]; then
