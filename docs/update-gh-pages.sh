@@ -13,8 +13,7 @@ cd "$GITHUB_WORKSPACE"
 git config user.name "$GITHUB_ACTOR"
 git config user.email "${GITHUB_ACTOR}@bots.github.com"
 
-git fetch "$remote_name"
-git checkout "$target_branch"
+git checkout --track "${remote_name}/${target_branch}"
 git merge "${remote_name}/${main_branch}"
 
 cd docs
