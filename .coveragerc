@@ -1,0 +1,5 @@
+[report]
+source = renamerename
+omit =
+    **/tests/*.py
+    **/test_*.py
