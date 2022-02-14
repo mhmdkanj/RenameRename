@@ -6,7 +6,7 @@ repo_uri="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
 remote_name="origin"
 main_branch="main"
 target_branch="gh-pages"
-build_dir="build"
+build_dir="build-docs"
 
 cd "$GITHUB_WORKSPACE"
 
@@ -18,7 +18,7 @@ git checkout "$target_branch"
 git rebase "${remote_name}/${main_branch}"
 
 cd docs
-make html
+make html BUILDDIR="$build_dir"
 git add "$build_dir"
 
 git commit -m "docs: update GitHub Pages"
