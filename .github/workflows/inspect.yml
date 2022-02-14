@@ -29,4 +29,4 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements-dev.txt
       - name: Run unit tests
-        run: pytest
+        run: pytest --junitxml=junit/test-results.xml --cov=renamerename --cov-report=xml
