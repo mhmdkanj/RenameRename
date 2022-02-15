@@ -1,4 +1,4 @@
-name: Inspect
+name: Test
 on: [push]
 jobs:
   style:

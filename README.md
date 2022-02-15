@@ -1,5 +1,7 @@
 # RenameRename
 
+![docs](https://github.com/mhmdkanj/RenameRename/actions/workflows/docs.yml/badge.svg?branch=gh-pages)
+![test](https://github.com/mhmdkanj/RenameRename/actions/workflows/test.yml/badge.svg?event=push)
 [![codecov](https://codecov.io/gh/mhmdkanj/RenameRename/branch/main/graph/badge.svg?token=VYS7K7KRVB)](https://codecov.io/gh/mhmdkanj/RenameRename)
 
 **RenameRename** is a command-line utility app that bulk renames a set of files based on some specifications.
