@@ -16,7 +16,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r docs/requirements-docs.txt
-      - name: Build & deploy docs
-        run: sh ./docs/update-gh-pages.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.deploy_token }}
+      - name: Build docs
+        run: |
+          cd docs
+          make html BUILDDIR=build-docs
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@v4.2.3
+        with:
+          branch: gh-pages
+          folder: docs/build-docs
+          token: ${{ secrets.deploy_token }}
+#      - name: Build & deploy docs
+#        run: sh ./docs/update-gh-pages.sh
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.deploy_token }}
