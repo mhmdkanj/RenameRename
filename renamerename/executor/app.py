@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 
 
-def parse_args():
+def parse_args(*args, **kwargs):
     parser = argparse.ArgumentParser(description='Bulk renaming of files made easy.', usage="renamerename [options]")
     parser.add_argument("--dir", type=str,
                         help="directory whose filenames are processed", required=False, default=".", metavar="directory")
@@ -38,7 +38,7 @@ def parse_args():
                                  help="undo renaming of set of files based on saved renaming specification",
                                  required=False, metavar="JSON file path")
     parser.add_argument("--version", action="version", version=f"RenameRename {__version__}")
-    return parser.parse_args()
+    return parser.parse_args(*args, **kwargs)
 
 
 def run(args=None):
