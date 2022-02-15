@@ -26,3 +26,5 @@ jobs:
           branch: gh-pages
           folder: docs/build-docs
           token: ${{ secrets.deploy_token }}
+          clean-exclude: |
+            index.html
