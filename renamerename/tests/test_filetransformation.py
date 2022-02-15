@@ -79,3 +79,10 @@ class TestFileTransformation:
     def test_repr(self, file_transformation_basic):
         content = r"FileTransformation({'one.py': 'one.py', 'two.txt': 'two.txt', 'three.tar.gz': 'three.tar.gz'})"
         assert repr(file_transformation_basic) == content
+
+    def test_delitem(self, file_transformation_basic):
+        del file_transformation_basic['one.py']
+        assert file_transformation_basic.transformations == {
+            'two.txt': 'two.txt',
+            'three.tar.gz': 'three.tar.gz'
+        }
