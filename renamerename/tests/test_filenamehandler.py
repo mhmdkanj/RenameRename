@@ -41,6 +41,9 @@ class TestFilenameHandler:
     def test_change_extension_multiple_ext(self, GetFilenameHandler):
         assert GetFilenameHandler.change_extension("file.tar.gz", ".zip") == "file.zip"
 
+    def test_change_extension_without_dot(self, GetFilenameHandler):
+        assert GetFilenameHandler.change_extension("file.tar.gz", "zip") == "file.zip"
+
     def test_remove_extension(self, GetFilenameHandler):
         assert GetFilenameHandler.change_extension("file.tar.gz", "") == "file"
 
