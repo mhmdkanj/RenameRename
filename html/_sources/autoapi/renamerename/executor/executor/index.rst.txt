@@ -1,0 +1,92 @@
+:py:mod:`renamerename.executor.executor`
+========================================
+
+.. py:module:: renamerename.executor.executor
+
+.. autoapi-nested-parse::
+
+   Utility classes for executing renaming on filesystem.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   renamerename.executor.executor.RenameExecutor
+
+
+
+
+.. py:exception:: DuplicateFilenamesError
+
+   Bases: :py:obj:`RuntimeError`
+
+   RuntimeError wrapper for loaded mapping with common values
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+
+.. py:class:: RenameExecutor(directory: str, save_renaming=False)
+
+   Renaming executor on the filesystem.
+
+   Constructor
+
+   :param str directory: directory containing the files to be renamed
+   :param save_renaming: save source and target filenames to disk , defaults to False
+   :type save_renaming: bool, optional
+
+   .. py:method:: execute(self, names: List[str], filetransformation: renamerename.handlers.handlers.FileTransformation)
+
+      Rename files on filesystem based on provided specification.
+
+      :param List[str] names: list of all filenames in :py:attr:`~directory`
+      :param FileTransformation filetransformation: FileTransformation instance
+      :raises FileNotFoundError: source filename does not exist
+      :raises FileExistsError: target filename already exists
+
+
+   .. py:method:: display_output(self, names: List[str], filetransformation: renamerename.handlers.handlers.FileTransformation)
+
+      Display output of renaming to STDOUT without actual execution.
+
+      :param List[str] names: list of all filenames in :py:attr:`~directory`
+      :param FileTransformation filetransformation: FileTransformation instance
+
+
+   .. py:method:: adjust_duplicates(self, names: List[str], filetransformation: renamerename.handlers.handlers.FileTransformation) -> renamerename.handlers.handlers.FileTransformation
+
+      Resolve duplicate filenames in list of target filenames.
+
+      :param List[str] names: list of all filenames in :py:attr:`~directory`
+      :param FileTransformation filetransformation: FileTransformation instance
+      :return: FileTransformation instance
+      :rtype: FileTransformation
+
+
+   .. py:method:: execute_from_file(self, names: List[str], filepath: str, undo: Optional[bool] = False)
+
+      Rename files on filesystem based on provided mapping from file.
+
+      :param List[str] names: list of all filenames in :py:attr:`~directory`
+      :param str filepath: path to file with source to target filename mapping
+      :param undo: reverse loaded mapping, defaults to False
+      :type undo: bool, optional
+      :raises DuplicateFilenamesError: found duplicated among target filenames in loaded file
+
+
+   .. py:method:: actual_transformation(self) -> renamerename.handlers.handlers.FileTransformation
+      :property:
+
+      Getter for actual renaming as FileTransformation.
+
+      :return: Actual transformation
+      :rtype: FileTransformation
+
+
+

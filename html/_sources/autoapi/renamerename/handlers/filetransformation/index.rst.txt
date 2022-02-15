@@ -1,0 +1,87 @@
+:py:mod:`renamerename.handlers.filetransformation`
+==================================================
+
+.. py:module:: renamerename.handlers.filetransformation
+
+.. autoapi-nested-parse::
+
+   Utility classes for mapping source filenames to target filenames.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   renamerename.handlers.filetransformation.FileTransformation
+
+
+
+
+.. py:class:: FileTransformation(transformations: dict)
+
+   Bases: :py:obj:`collections.abc.MutableMapping`
+
+   Wrapper class as dictionary or mapping of source filename to target filename.
+
+   Constructor
+
+   :param dict transformations: mapping of source to target filenames
+   :raises TypeError: type of parameter given is not a dict
+
+   .. py:method:: __setitem__(self, key, value)
+
+
+   .. py:method:: __getitem__(self, key)
+
+
+   .. py:method:: __delitem__(self, key)
+
+
+   .. py:method:: __iter__(self)
+
+
+   .. py:method:: __len__(self)
+
+
+   .. py:method:: __str__(self)
+
+      Return str(self).
+
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: from_list(cls, filenames: List[str]) -> FileTransformation
+      :classmethod:
+
+      Construct FileTransformation instance from a list of filenames by mapping each filename to itself.
+
+      :param List[str] filenames: list of filenames to wrap as a transformation
+      :return: mapping of filenames to themselves
+      :rtype: FileTransformation
+
+
+   .. py:method:: get_reversed(self) -> Dict[str, List[str]]
+
+      Reverse mapping of source to target filenames, while maintain information on duplicate target filenames
+
+      :return: mapping of target to list of source filenames
+      :rtype: Dict[str: List[str]]
+
+
+   .. py:method:: has_duplicates(self) -> bool
+
+      Check if target filenames contain duplicates.
+
+      :return: truth value whether some target filenames are duplicates
+      :rtype: bool
+
+
+

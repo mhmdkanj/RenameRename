@@ -1,0 +1,146 @@
+:py:mod:`renamerename.handlers.handlers`
+========================================
+
+.. py:module:: renamerename.handlers.handlers
+
+.. autoapi-nested-parse::
+
+   Utility classes for filename manipulators.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   renamerename.handlers.handlers.FilenameHandler
+   renamerename.handlers.handlers.FileListHandler
+
+
+
+
+.. py:class:: FilenameHandler
+
+   Utility class for manipulating a filename.
+
+   .. py:method:: add_prefix(name: str, prefix: str) -> str
+      :staticmethod:
+
+      Add a prefix to a filename.
+
+      :param str name: filename with extension
+      :param str prefix: prefix to be prepended to filename
+      :return: filename with prepended prefix
+      :rtype: str
+
+
+   .. py:method:: add_suffix(name: str, suffix: str) -> str
+      :staticmethod:
+
+      Add a suffix to a filename.
+
+      :param str name: filename with extension
+      :param str suffix: suffix to be appended to filename
+      :return: filename with appended suffix
+      :rtype: str
+
+
+   .. py:method:: change_extension(name: str, new_ext: str) -> str
+      :staticmethod:
+
+      Change the extension of a filename.
+
+      :param name: filename with extension
+      :param new_ext: desired extension of filename
+      :return: filename with new extension
+      :rtype: str
+
+
+   .. py:method:: change_name(name: str, new_filename: str) -> str
+      :staticmethod:
+
+      Change filename to new name.
+
+      :param str name: filename with extension
+      :param str new_filename: desired filename
+      :return: changed filename (while preserving extension)
+      :rtype: str
+
+
+   .. py:method:: get_components(name: str) -> Tuple[str]
+      :staticmethod:
+
+      Split pure filename and extension.
+
+      :param str name: filename with extension
+      :return: tuple of pure filename and extension
+      :rtype: Tuple[str]
+
+
+
+.. py:class:: FileListHandler(names: List[str])
+
+   Utility class for basic actions on a set of filenames.
+
+   Constructor
+
+   :param List[str] names: list of filenames
+
+   .. py:method:: filter_names(self, filter: Optional[str] = None)
+
+      Filter filenames based on a Unix pattern filter.
+
+      :param str filter: pattern by which filenames are filtered out, defaults to None
+
+
+   .. py:method:: add_prefix(self, prefix: str)
+
+      Add prefixes to filtered filenames.
+
+      :param str prefix: prefix to be prepended to filtered filenames
+
+
+   .. py:method:: add_suffix(self, suffix: str)
+
+      Add suffixes to filtered filenames.
+
+      :param str suffix: suffix to be appended to filtered filenames
+
+
+   .. py:method:: change_extension(self, new_ext: str)
+
+      Change extensions of filtered filenames.
+
+      :param str new_ext: extension to be set for filtered filenames
+
+
+   .. py:method:: add_numbering(self, prefix: str)
+
+      Change filtered filenames to same name with numbered suffixes.
+
+      :param str prefix: new filename prepended to counter
+
+
+   .. py:method:: filetransformations(self) -> renamerename.handlers.filetransformation.FileTransformation
+      :property:
+
+      Getter for mapping of source to target filenames.
+
+      :return: FileTransformation instance
+      :rtype: FileTransformation
+
+
+   .. py:method:: filenames(self) -> List[str]
+      :property:
+
+      Getter for filtered filenames.
+
+      :return: filtered filenames
+      :rtype: List[str]
+
+
+

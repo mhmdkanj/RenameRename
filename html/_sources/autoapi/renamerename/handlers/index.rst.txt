@@ -1,0 +1,21 @@
+:py:mod:`renamerename.handlers`
+===============================
+
+.. py:module:: renamerename.handlers
+
+.. autoapi-nested-parse::
+
+   Utility modules for manipulating filenames.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   filetransformation/index.rst
+   handlers/index.rst
+
+

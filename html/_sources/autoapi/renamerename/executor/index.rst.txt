@@ -1,0 +1,21 @@
+:py:mod:`renamerename.executor`
+===============================
+
+.. py:module:: renamerename.executor
+
+.. autoapi-nested-parse::
+
+   Utility modules for renaming files in filesystem.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   encoder_decoder/index.rst
+   executor/index.rst
+
+

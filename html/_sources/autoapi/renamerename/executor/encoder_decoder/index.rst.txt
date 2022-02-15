@@ -1,0 +1,63 @@
+:py:mod:`renamerename.executor.encoder_decoder`
+===============================================
+
+.. py:module:: renamerename.executor.encoder_decoder
+
+.. autoapi-nested-parse::
+
+   Serialization and Deserialization utility classes for FileTransformation
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   renamerename.executor.encoder_decoder.TransformationEncoder
+   renamerename.executor.encoder_decoder.TransformationDecoder
+
+
+
+
+.. py:class:: TransformationEncoder
+
+   Serialization utility class for FileTransformation instance
+
+   .. py:method:: encode_to_json_file(filetransformation: renamerename.handlers.filetransformation.FileTransformation, path: str)
+      :staticmethod:
+
+      Serialize FileTransformation instance to JSON file.
+
+      :param FileTransformation filetransformation: FileTransformation instance
+      :param str path: serialization file path
+
+
+   .. py:method:: save_transformation_to_json(directory: str, filetransformation: renamerename.handlers.filetransformation.FileTransformation)
+      :staticmethod:
+
+      Serialize FileTransformation instance to JSON file named renaming_DATE_TIME.json.
+
+      :param str directory: parent directory where JSON file is saved
+      :param filetransformation: FileTransformation instance
+
+
+
+.. py:class:: TransformationDecoder
+
+   Deserialization utility class for FileTransformation instance
+
+   .. py:method:: decode_from_json_file(path: str) -> renamerename.handlers.filetransformation.FileTransformation
+      :staticmethod:
+
+      Deserialize JSON file into FileTransformation instance.
+
+      :param str path: path to JSON file
+      :return: FileTransformation instance
+      :rtype: FileTransformation
+
+
+

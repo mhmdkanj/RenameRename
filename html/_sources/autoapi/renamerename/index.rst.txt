@@ -1,0 +1,29 @@
+:py:mod:`renamerename`
+======================
+
+.. py:module:: renamerename
+
+.. autoapi-nested-parse::
+
+   RenameRename package
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   executor/index.rst
+   handlers/index.rst
+
+
+Package Contents
+----------------
+
+.. py:data:: __version__
+   :annotation: = 0.2.0
+
+   
+
