@@ -37,6 +37,10 @@ class TestFileTransformation:
             'three.tar.gz': 'three.tar.gz'
         }
 
+    def test_init_invalid_arg(self):
+        with pytest.raises(TypeError):
+            FileTransformation(object)
+
     def test_from_list(self, file_transformation_basic):
         names = ['one.py', 'two.txt', 'three.tar.gz']
         assert file_transformation_basic.transformations == FileTransformation.from_list(names).transformations
@@ -71,3 +75,7 @@ class TestFileTransformation:
 
     def test_has_duplicates(self, file_transformation_with_duplicates):
         assert file_transformation_with_duplicates.has_duplicates()
+
+    def test_repr(self, file_transformation_basic):
+        content = r"FileTransformation({'one.py': 'one.py', 'two.txt': 'two.txt', 'three.tar.gz': 'three.tar.gz'})"
+        assert repr(file_transformation_basic) == content
