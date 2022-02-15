@@ -26,7 +26,3 @@ jobs:
           branch: gh-pages
           folder: docs/build-docs
           token: ${{ secrets.deploy_token }}
-#      - name: Build & deploy docs
-#        run: sh ./docs/update-gh-pages.sh
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.deploy_token }}
