@@ -222,3 +222,19 @@ class TestRenameExecutor:
 
         decode_mock.assert_called_once_with(filepath)
         mocker.resetall()
+
+    def test_display_output(self, rename_executor, get_names, mocker):
+        filetransformation = FileTransformation({
+            'aaa': 'foo_aaa',
+            'bbb': 'foo_bbb',
+            'ccc.py': 'foo_ccc.py',
+            'ddd.tar.gz': 'foo_ddd.tar.gz',
+            'eee.txt': 'foo_eee.txt',
+        })
+        import renamerename
+        adjust_duplicates_mock = mocker.patch.object(renamerename.executor.executor.RenameExecutor, 'adjust_duplicates')
+        adjust_duplicates_mock.return_value = filetransformation
+        print_mocker = mocker.patch('builtins.print')
+        rename_executor.display_output(get_names, filetransformation)
+        adjust_duplicates_mock.assert_called_once_with(get_names, filetransformation)
+        print_mocker.assert_called_once_with(filetransformation)
