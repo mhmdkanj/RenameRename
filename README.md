@@ -13,7 +13,7 @@ then hopefully RenameRename can cater to your bulk renaming needs. 😄
 The main usage of RenameRename is as a CLI tool.
 Nevertheless, it can also be used as a package of modules containing utility classes and functions for your own modules.
 
-Feel free to take a look at the [API reference / documentation](https://mhmdkanj.github.io/RenameRename/build-docs/html/index.html).
+Feel free to take a look at the [API reference / documentation](https://mhmdkanj.github.io/RenameRename/html/index.html).
 
 ## Requirements
 
@@ -193,7 +193,7 @@ pytest
 
 ## Documentation
 
-The [documentation](https://mhmdkanj.github.io/RenameRename/build-docs/html/index.html) (mostly the API reference) to the Python package currently resides on GitHub Pages.
+The [documentation](https://mhmdkanj.github.io/RenameRename/html/index.html) (mostly the API reference) to the Python package currently resides on GitHub Pages.
 
 For contributing developers, building the docs locally requires the following:
 
